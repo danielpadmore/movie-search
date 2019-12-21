@@ -1,9 +1,5 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import App from "./components/app";
 
-ReactDOM.render(
-  <main>
-    <h1>Movie Search</h1>
-  </main>,
-  document.getElementById("root")
-);
+ReactDOM.render(<App />, document.getElementById("root"));

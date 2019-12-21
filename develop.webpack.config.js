@@ -1,5 +1,9 @@
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
+const webpack = require("webpack");
+
+// Configure environment variables
+const dotenv = require("dotenv").config({ path: __dirname + "/.env" });
 
 /**
  * The main responsibility for the develop config will be to run local development server
@@ -36,5 +40,10 @@ module.exports = {
     filename: "[name].bundle.js",
     path: path.resolve(__dirname, "dist")
   },
-  plugins: [new CopyPlugin([{ from: "public" }])] // Copy the root public folder into dist
+  plugins: [
+    new CopyPlugin([{ from: "public" }]), // Copy the root public folder into dist
+    new webpack.DefinePlugin({
+      "process.env": JSON.stringify(dotenv.parsed)
+    })
+  ]
 };

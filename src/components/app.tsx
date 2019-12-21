@@ -12,7 +12,7 @@ export const App = () => {
       const results = await movieClient.searchAllMovies("iron man");
       setMovies(results);
     })();
-  });
+  }, []);
   return (
     <main>
       <h1>Movie Search</h1>

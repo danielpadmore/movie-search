@@ -19,7 +19,7 @@ export const App = () => {
       {movies && (
         <ul>
           {movies.map(item => (
-            <li>{item.title}</li>
+            <li key={item.id}>{item.title}</li>
           ))}
         </ul>
       )}

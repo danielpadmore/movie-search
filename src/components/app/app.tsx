@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch } from "react-router";
+import { Route, Switch, useHistory } from "react-router";
 import SearchRoute from "../../routes/search";
 import MovieRoute from "../../routes/movie";
 import { useMovieSearch } from "../../hooks/use-movie-client";
@@ -9,6 +9,7 @@ import classes from "./app.module.scss";
 export const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [movies, searchLoading, searchError] = useMovieSearch(searchTerm);
+  const history = useHistory();
 
   const queryParams = useQueryParams();
 
@@ -28,7 +29,9 @@ export const App = () => {
         <input
           value={searchTerm}
           onChange={event => {
-            setSearchTerm(event.target.value);
+            const newTerm = event.target.value;
+            setSearchTerm(newTerm);
+            history.push(`/search?query=${newTerm}`);
           }}
         />
       </header>

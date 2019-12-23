@@ -1,11 +1,10 @@
 import React from "react";
-import classes from "./card.module.scss";
-
+import classes from "./grid.module.scss";
 type Props = {
   children: React.ReactNode;
 };
-const Card = ({ children }: Props) => {
+const Grid = ({ children }: Props) => {
   return <div className={classes.container}>{children}</div>;
 };
 
-export default Card;
+export default Grid;

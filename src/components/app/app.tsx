@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Router, Route, Switch } from "react-router";
-import SearchRoute from "../routes/search";
-import MovieRoute from "../routes/movie";
-import { useMovieSearch } from "../hooks/use-movie-client";
-import useQueryParams from "../hooks/use-query";
+import { Route, Switch } from "react-router";
+import SearchRoute from "../../routes/search";
+import MovieRoute from "../../routes/movie";
+import { useMovieSearch } from "../../hooks/use-movie-client";
+import useQueryParams from "../../hooks/use-query";
+
 
 export const App = () => {
   const [searchTerm, setSearchTerm] = useState("");

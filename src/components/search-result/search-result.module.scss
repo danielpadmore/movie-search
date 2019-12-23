@@ -9,4 +9,9 @@
     background-color: #5e5e5ea1;
     cursor: pointer;
   }
+  & p {
+    & span {
+      padding-right: 3px;
+    }
+  }
 }

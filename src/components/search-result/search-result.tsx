@@ -17,7 +17,8 @@ const SearchResult = ({ movie }: Props) => {
     <Card backgroundUrl={backgroundUrl}>
       <div className={classes.content}>
         <p>
-          {movie.title} ({releaseYear})
+          <span>{movie.title}</span>
+          <span>({releaseYear})</span>
         </p>
       </div>
     </Card>

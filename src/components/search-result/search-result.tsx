@@ -7,8 +7,14 @@ type Props = {
 };
 const SearchResult = ({ movie }: Props) => {
   const releaseYear = new Date(movie.releaseDate).getFullYear();
+
+  // We'll add a fallback image here for the time being which could be from a CDN or shipped with the app
+  const backgroundUrl =
+    movie.backdropUrl !== ""
+      ? movie.backdropUrl
+      : "https://www.virginmediastore.com/images/tile-placeholder-backdrop.png";
   return (
-    <Card backgroundUrl={movie.backdropUrl}>
+    <Card backgroundUrl={backgroundUrl}>
       <div className={classes.content}>
         <p>
           {movie.title} ({releaseYear})

@@ -4,7 +4,7 @@ import SearchRoute from "../../routes/search";
 import MovieRoute from "../../routes/movie";
 import { useMovieSearch } from "../../hooks/use-movie-client";
 import useQueryParams from "../../hooks/use-query";
-
+import classes from "./app.module.scss";
 
 export const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -23,13 +23,15 @@ export const App = () => {
 
   return (
     <main>
-      <h1>Movie Search</h1>
-      <input
-        value={searchTerm}
-        onChange={event => {
-          setSearchTerm(event.target.value);
-        }}
-      />
+      <header className={classes.header}>
+        <h1>Movie Search App</h1>
+        <input
+          value={searchTerm}
+          onChange={event => {
+            setSearchTerm(event.target.value);
+          }}
+        />
+      </header>
       <Switch>
         <Route
           path="/search"

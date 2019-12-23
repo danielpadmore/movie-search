@@ -1,5 +1,12 @@
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
+const webpack = require("webpack");
+const dotenv = require("dotenv");
+
+// Configure environment variables
+dotenv.config({ path: __dirname + "/.env" });
+
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 /**
  * The main responsibility for the production config will be to create production bundles ready for distribution
@@ -26,6 +33,39 @@ module.exports = {
         enforce: "pre",
         test: /\.js$/,
         loader: "source-map-loader" // JS files to be processed by the source map loader
+      },
+      {
+        test: /\.module\.s(a|c)ss$/,
+        loader: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            options: {
+              modules: true,
+              sourceMap: false
+            }
+          },
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: false
+            }
+          }
+        ]
+      },
+      {
+        test: /\.s(a|c)ss$/,
+        exclude: /\.module.(s(a|c)ss)$/,
+        loader: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: false
+            }
+          }
+        ]
       }
     ]
   },
@@ -36,5 +76,14 @@ module.exports = {
     filename: "[name].bundle.js",
     path: path.resolve(__dirname, "dist")
   },
-  plugins: [new CopyPlugin([{ from: "public" }])] // Copy the root public folder into dist
+  plugins: [
+    new CopyPlugin([{ from: "public" }]), // Copy the root public folder into dist
+    new webpack.DefinePlugin({
+      "process.env": dotenv.parsed
+    }),
+    new MiniCssExtractPlugin({
+      filename: "[name].[hash].css",
+      chunkFilename: "[id].[hash].css"
+    })
+  ]
 };

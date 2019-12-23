@@ -33,5 +33,5 @@ export function useMovieSearch(query: string) {
     })();
   }, [debouncedQuery]);
 
-  return [movies, loading, error];
+  return [movies, loading, error] as [Movie[], boolean, string | null];
 }

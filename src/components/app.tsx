@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Router, Route, Switch } from "react-router";
 import SearchRoute from "../routes/search";
 import MovieRoute from "../routes/movie";
-import { createBrowserHistory } from "history";
-
 import { useMovieSearch } from "../hooks/use-movie-client";
-
-const history = createBrowserHistory();
+import useQueryParams from "../hooks/use-query";
 
 export const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [movies, searchLoading, searchError] = useMovieSearch(searchTerm);
+
+  const queryParams = useQueryParams();
+
+  const query = queryParams.get("query");
+
+  // If we have a search query parameter on mount and no searchTerm in state - then we should use the query passed via URL
+  useEffect(() => {
+    if (query && !searchTerm) {
+      setSearchTerm(query);
+    }
+  }, []);
 
   return (
     <main>
@@ -21,12 +29,13 @@ export const App = () => {
           setSearchTerm(event.target.value);
         }}
       />
-      <Router history={history}>
-        <Switch>
-          <Route path="/search" component={SearchRoute} />
-          <Route path="/movie" component={MovieRoute} />
-        </Switch>
-      </Router>
+      <Switch>
+        <Route
+          path="/search"
+          component={() => <SearchRoute movies={movies} />}
+        />
+        <Route path="/movie" component={() => <MovieRoute />} />
+      </Switch>
     </main>
   );
 };

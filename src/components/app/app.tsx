@@ -22,11 +22,20 @@ export const App = () => {
     }
   }, []);
 
+  // We'll determine a message to display to the user here.
+  let statusMessage = "Type to Search";
+  if (searchLoading) {
+    statusMessage = "Loading...";
+  } else if (searchError !== null) {
+    statusMessage = searchError;
+  }
+
   return (
     <main>
       <header className={classes.header}>
         <h1>Movie Search App</h1>
         <input
+          className={classes.error}
           value={searchTerm}
           onChange={event => {
             const newTerm = event.target.value;
@@ -34,6 +43,7 @@ export const App = () => {
             history.push(`/search?query=${newTerm}`);
           }}
         />
+        <p>{statusMessage}</p>
       </header>
       <Switch>
         <Route
